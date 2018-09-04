@@ -83,7 +83,7 @@ Please note that if you have defined a new privacy policy document for your appl
 
 ### 2.4	Trigger an Automated Integration Between SAP Cloud for Customer and SAP Cloud Platform
 
-Follow the [Onboarding Guide](https://help.sap.com/viewer/462e41a242984577acc28eae130855ad/Cloud/en-US/9dcbeda8fcbf436e956496721d4f0efe.html#loio9dcbeda8fcbf436e956496721d4f0efe). Make sure you triggered [automated integration between SAP Cloud for Customer and SAP Cloud Platform](https://help.sap.com/viewer/462e41a242984577acc28eae130855ad/Cloud/en-US/9dcbeda8fcbf436e956496721d4f0efe.html). It will set up a trust between the customer account and IAS (for log-on scenario).
+Follow the [Onboarding Guide](https://uacp2.hana.ondemand.com/viewer/462e41a242984577acc28eae130855ad/Cloud/en-US) and make sure you triggered [automated integration between SAP Cloud for Customer and SAP Cloud Platform](https://help.sap.com/viewer/462e41a242984577acc28eae130855ad/Cloud/en-US/9dcbeda8fcbf436e956496721d4f0efe.html). It will set up a trust between the customer account and IAS (for log-on scenario).
 
   In Cloud Platform, portal, under Roles, assign the user to the TENANT_ADMIN role.
   You should now be able to log on to the portal service’s Admin Space with the user ID
