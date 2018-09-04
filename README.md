@@ -2,9 +2,7 @@
 # Welcome to SAP Cloud Platform, Portal Service - Partner Channel Management Configuration Guide
 
 
-The SAP Cloud Platform, portal service for Partner Channel Management configuration guide provides all you need to deploy a PCM solution on your SCP account and connect it to your SAP Cloud for Customer (C4C) tenant and SAP Cloud Identity (SCI) tenant.
-
-PCM solution configuration video is now published on the portals YouTube channel - https://youtu.be/9awGnMUcuAk
+The SAP Cloud Platform, portal service for Partner Channel Management configuration guide provides all you need to deploy a PCM solution on your SCP account and connect it to your SAP Cloud for Customer (C4C) tenant and Identity Authentication tenant.
 
 ## How to Deploy the Partner Channel Management Solution
 This guide will show you how to download the partner channel management solution from the SAP SCP, portal service GitHub repository and deploy it to your account.
@@ -20,7 +18,7 @@ The Partner Channel Management solution includes several components:
 
 *	SAP Cloud Platform (SCP) productive account (the solution does not work with a trial account)
 *	Portal Service enabled from the SCP account cockpit, Services tab
-*	SAP Cloud Identity (SCI) tenant
+*	Identity Authentication tenant
 *	SAP Cloud for Customer (C4C) tenant
 *	In C4C, Partner Program Management project scope is enabled. For more information [read this blog](https://blogs.sap.com/2015/09/26/cloud-for-customer-specific-configurations-for-partner-channel-management/)
 *	In C4C, Deal Registration is also selected if needed.
@@ -29,7 +27,7 @@ The Partner Channel Management solution includes several components:
      -  Admin access to an SCP account
 	 -  TENANT_ADMIN user for Portal Service
      -  C4C admin user
-     - 	SCI admin user
+     -  Identity Authentication admin user
 
 ## 2. Configure Your Account
 
@@ -63,19 +61,19 @@ The Partner Channel Management solution includes several components:
        * Candidate
 
 
-###  2.3 Create an email template in SCI
-   The email template for the PCM invitation flow includes a SAP logo as well as pre-defined text. You may update the email template used by the SCI to send invitations to users according to your needs.
+###  2.3 Create an email template in the Identity Authentication Service (IAS)
+   The email template for the PCM invitation flow includes a SAP logo as well as pre-defined text. You may update the email template used by the IAS to send invitations to users according to your needs.
    
    1.	Download SAPID Mail Templates.zip from [ https://github.com/SAP/hcp-portal-service-for-pcm/releases](https://github.com/SAP/hcp-portal-service-for-pcm/releases)
    2.	Adjust the template according to your needs.
-   3.  Add the template to the SCI IDP account. For more details:  https://help.sap.com/viewer/6d6d63354d1242d185ab4830fc04feb1/Cloud/en-US/3c4f39763f3c4d659a43e1c33c94b95e.html
+   3.  Add the template to the Identity Authentication IDP account. For more details:  https://help.sap.com/viewer/6d6d63354d1242d185ab4830fc04feb1/Cloud/en-US/3c4f39763f3c4d659a43e1c33c94b95e.html
    4.	Define the uploaded mail template to your application. For more details:       https://help.sap.com/viewer/6d6d63354d1242d185ab4830fc04feb1/Cloud/en-US/bb2c79b71f8d47ec877882d78e0ceb39.html
 
-#### 2.3.1 Set up Privacy policy in SCI
+#### 2.3.1 Set up Privacy policy in IAS
 To adhere to the EU General Data Protection Regulation (GDPR), after an 
 invitee has accepted the mail invitation (by pressing the account activation button), as part of the activation process users should read a privacy policy document and consent to it.
-For this purpose you as the Partner Manager should configure the privacy policy document in SCI as follows:
-   1. Create a privacy policy document and add it to SCI. For more details:
+For this purpose you as the Partner Manager should configure the privacy policy document in IAS as follows:
+   1. Create a privacy policy document and add it to IAS. For more details:
  https://help.sap.com/viewer/6d6d63354d1242d185ab4830fc04feb1/Cloud/en-US/e73cf2dc28fa40c09dd4ad294c23ee5f.html
    2. Define the privacy policy for your application. For more details:
  https://help.sap.com/viewer/6d6d63354d1242d185ab4830fc04feb1/Cloud/en-US/96111183bf734776bfbec21f3d5f5a5a.html 
@@ -83,96 +81,41 @@ For this purpose you as the Partner Manager should configure the privacy policy 
 Please note that if you have defined a new privacy policy document for your application, all users that have already consented to the old privacy policy will now have to consent to the new updated policy on login to the application.
 
 
-### 2.4	Set up a trust between the customer account and SCI (for log-on scenario)
+### 2.4	Trigger an Automated Integration Between SAP Cloud for Customer and SAP Cloud Platform
 
-Note! If the trust was done as part of the [onboarding guide](https://uacp2.hana.ondemand.com/viewer/462e41a242984577acc28eae130855ad/Cloud/en-US), the below step should be skipped.
-
-#####  2.4.1	Customer SCP Account Settings
-   1.	Open the customer SCP account cockpit, click on 'Security' and navigate to the Trust screen.
-   2.	Edit the 'Local Service Provider' and change the Configuration Type to Custom.
-   3.	Click the Generate Key Pair button to populate the Signing Key and Signing Certificate if they do not appear.
-   4.	Change the 'Principle Propagation' value to 'Enabled'.
-   5.	Save the settings and download the metadata by clicking on 'Get Metadata' link.
-  	![metadata](/resources/pcm1.png)
-   6.	Go to the 'Trusted Identity Provider' tab and click the Add Trusted Identity Provider link.
-   7.	Browse and upload the IDP metadata file.
-
-        TIP: You can get the IDP (SCI) metadata file by navigating to: https://<your SCI account name>.<accounts>.ondemand.com/saml2/metadata
-	Open the above URL in Chrome and copy the entire text starting from <ns3… until the end. Then, paste it to a text file and save.  
-	![idpmetadata](/resources/pcm2.png)  
-   8.	In the General tab, change the User ID Source to attribute, and then in the Source Value field, put mail.
-   9.	In the Attributes tab, click Add Assertion-Based Attribute to add the following attributes mapping (after adding one pair, click the link again to add more input fields):
-
-
-    Assertion Attribute |  Principle Attribute
-    --- | ---
-    first_name | firstname
-    last_name  | lastname
-    mail       | email
-
-   10.	Save and close.
-
-
-##### 2.4.2	SCI IDP Settings:
-   1.	Open the admin page of your SCI IDP account. For example:
-   https://<your SCI account name>.<accounts>.ondemand.com/admin/
-   2.	Click Applications.
-   3.	Add a new application and add the customer's name as the application name.
-   4.	Open 'SAML 2.0 Configuration' section for your application and upload the customer's SCP account Service Provider metadata, which you downloaded already in section 2.5.1 step 5.
-   5.	Save and close.
-
+Follow the [Onboarding Guide](https://help.sap.com/viewer/462e41a242984577acc28eae130855ad/Cloud/en-US/9dcbeda8fcbf436e956496721d4f0efe.html#loio9dcbeda8fcbf436e956496721d4f0efe). Make sure you triggered [automated integration between SAP Cloud for Customer and SAP Cloud Platform](https://help.sap.com/viewer/462e41a242984577acc28eae130855ad/Cloud/en-US/9dcbeda8fcbf436e956496721d4f0efe.html). It will set up a trust between the customer account and IAS (for log-on scenario).
 
   In Cloud Platform, portal, under Roles, assign the user to the TENANT_ADMIN role.
   You should now be able to log on to the portal service’s Admin Space with the user ID
   (email) that was assigned to it when the customer account was provisioned to the portal service.
-  If the user cannot log in, make sure that the user was added to the SCI account (go to the SCI admin page and create the user via the User Management page or upload the user with his/her full details in a CSV file format. To see the required details, you can export a user to a CSV file and edit the file).
+  If the user cannot log in, make sure that the user was added to the Identity Authentication account (go to the Identity Authentication admin page and create the user via the User Management page or upload the user with his/her full details in a CSV file format. To see the required details, you can export a user to a CSV file and edit the file).
   
 
-#### 2.5	Set up trust between the customer account and SCI API (for SAP ID invitation flow)
-   1. Open the admin page of your SCI IDP account.
+#### 2.5	Set up trust between the customer account and IAS API (for SAP ID invitation flow)
+   1. Open the admin page of your Identity Authentication IDP account.
    2. Click Applications.
    3. Choose your application (created in step 3 in section 2.4.2)
    4. Go to 'HTTP Basic Authentication' under 'API Authentication' section
    5. Enter a password and confirm it (save it for future use)
    6. Click on 'Save' button
-   7. Enter the page and copy the user ID that was generated by SCI (save it as well for future use)
+   7. Enter the page and copy the user ID that was generated by IAS (save it as well for future use)
 
 #### 2.6	Set up trust between the customer account and SAP C4C backend (for C4C invitation flow)
 
-Note! If the trust was done as part of the [onboarding guide](https://uacp2.hana.ondemand.com/viewer/462e41a242984577acc28eae130855ad/Cloud/en-US), the below step should be skipped.
-
-   1. Log in to C4C backend with an Admin work center authorization.
-   ![c4cadmin](/resources/pcm3.png)  
-   2. Under the Administrator section, go to Common Tasks and click on Configure OAuth 2.0 Identity Provider.  
-   ![oauthidp](/resources/pcm4.png)  
-   3. Create a new OAuth 2.0 Identity Provider.  
-   ![newoauthprovider](resources/pcm5.jpg)  
-       You will see the following screen:  
-         ![oauthprovider](/resources/pcm6.jpg)
-
-   4. In a new browser, open the customer SCP account trust setting and fill out the required details:  
-   ![hcptrust](/resources/pcm7.jpg)  
-   5. Back in the Administrator section, click on OAUTH2.0 CLIENT REGISTRATION
-   6. Create a new OAuth Client Registration as follows:
-   	* Copy the 'Client ID' value to a Notepad. This value will later be used in the C4C destination.  
-	* In 'Client Secret' add a password (remember it for future use)  
-	* Description is optional. You can write the password for reference.  
-	* In 'Issuer name' select the OAuth provider you created
-	* Select the 'UIWC:CC_HOME' scope ID that appears in the Scope table  
-   ![clientreg](/resources/pcm8.jpg)
+As part of the [onboarding guide](https://uacp2.hana.ondemand.com/viewer/462e41a242984577acc28eae130855ad/Cloud/en-US) make sure you [configured OAuth Client for OData Access](https://help.sap.com/viewer/462e41a242984577acc28eae130855ad/Cloud/en-US/0ac0dc9b3f3e4a07ba64cbac74a23327.html) 
 
 #### 2.7	Upload destinations to customer SCP account
 
-The destination file is created in your SCP account by opening the account's cockpit in the destination page and clicking on the "New Destination" button: https://account.[datacenter].hana.ondemand.com/cockpit#/acc/[account's name]/destinations    
-The values in the destination fields are case sensitive, so please make sure to create the destinations based on the instructions below.  
-![dest](/resources/pcm12.PNG)  
+As part of the [onboarding guide](https://uacp2.hana.ondemand.com/viewer/462e41a242984577acc28eae130855ad/Cloud/en-US) make sure you [created OAuth2SAMLBearerAssertion destination](https://help.sap.com/viewer/462e41a242984577acc28eae130855ad/Cloud/en-US/929294823bc44614ba2034662f043793.html). Set its "Name" property to "C4C". This is an OAuth C4C destination used for connecting to the SAP C4C backend during partner flow.
+
+Additionally create the following destinations:
 
 ##### 2.7.1	SAPID Destination  
-Destination used for the invitation flow with SCI.  
+Destination used for the invitation flow with IAS.  
   + Name = sapid
   + Type = HTTP
   + Description = (enter a description)
-  + URL = (enter the URL to your SCI, https://<your SCI account name>.<accounts>.ondemand.com/)
+  + URL = (enter the URL to your IAS, https://<your Identity Authentication account name>.<accounts>.ondemand.com/)
   + ProxyType = Internet
   +	Authentication = BasicAuthentication
   + User = (enter the user ID from section 2.5 above)
@@ -181,28 +124,6 @@ Destination used for the invitation flow with SCI.
   Additional property:
   Properties are added by clicking on "New Property" button  
   +	TrustAll = true (add this manually. Note that 'TrustAll' is the key and 'true' is its value.)
-
-
-##### 2.7.2	C4C Destination  
-oAuth C4C destination (used for connecting to the SAP C4C backend during partner flow) with the parameters in the next section.  
-  + Name = C4C
-  + Type = HTTP
-  + Description = (enter description)
-  + URL = (enter the full URL of your C4C tenant, E.g. https://myXXXXXX.crm.ondemand.com)
-  + ProxyType=Internet
-  + Authentication=OAuth2SAMLBearerAssertion
-  + Audience = (take the value from: General Settings in C4C administration view - 'Configure SSO' - 'Local Service Provider')
-  + Client Key = (this should be taken from the client registration screen in C4C, under the Client ID field)  
-  ![clientkey](/resources/pcm10.png)
-  + Token Service URL = …/sap/bc/sec/oauth2/token (this relative path should come after the full URL to C4C tenant. Add your sap-client ID after the token, E.g. https://myXXXXXX.crm.ondemand.com/sap/bc/sec/oauth2/token?sap-client=073
-Please contact your C4C contact to get the sap-client value)
-  + Token Service User = (same value as of the client key)
-  + Token Service Password = (the password you specified in C4C client registration)  
-  Additional properties:  
-  + authnContextClassRef = urn:oasis:names:tc:SAML:2.0:ac:classes:PreviousSession (add this manually)
-  + nameIdFormat = urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress (add this manually)
-  + scope = UIWC:CC_HOME (add this manually)  
-  ![c4cdest](/resources/pcm11.png)
 
 
 ##### 2.7.3	C4C__Public Destination  
