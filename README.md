@@ -112,7 +112,8 @@ Additionally create the following destinations:
 
 ##### 2.7.1	SAPID Destination  
 Destination used for the invitation flow with IAS. 
-Basic properties: 
+Basic properties:
+
 |Property Name|Property Value|
 |-------------|--------------|
   | Name | sapid
@@ -125,7 +126,8 @@ Basic properties:
   | Password | Enter the password from section 2.5 above |
   
   Additional property:
-  Properties are added by clicking on "New Property" button from the Additional Properties panel  
+  Properties are added by clicking on "New Property" button from the Additional Properties panel
+
 |Property Name|Property Value|
 |-------------|--------------|
 | TrustAll | true |
@@ -134,7 +136,8 @@ Basic properties:
 
 
 ##### 2.7.3	C4C__Public Destination  
-Public C4C destination (used for connecting to the C4C backend during a guest registration scenario) with the parameters in the next section.  
+Public C4C destination (used for connecting to the C4C backend during a guest registration scenario) with the parameters in the next section.
+
 |Property Name|Property Value|
 |-------------|--------------|
 | Name | C4C__public (double underscore) |
