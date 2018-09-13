@@ -2,7 +2,7 @@
 # Welcome to SAP Cloud Platform, Portal Service - Partner Channel Management Configuration Guide
 
 
-The SAP Cloud Platform, portal service for Partner Channel Management configuration guide provides all you need to deploy a PCM solution on your SCP account and connect it to your SAP Cloud for Customer (C4C) tenant and Identity Authentication tenant.
+The SAP Cloud Platform, portal service for Partner Channel Management configuration guide provides all you need to deploy a PCM solution on your SCP account and connect it to your SAP Hybris Cloud for Customer (C4C) tenant and Identity Authentication tenant.
 
 ## How to Deploy the Partner Channel Management Solution
 This guide will show you how to download the partner channel management solution from the SAP SCP, portal service GitHub repository and deploy it to your account.
@@ -91,7 +91,7 @@ Follow the [Onboarding Guide](https://uacp2.hana.ondemand.com/viewer/462e41a2429
   If the user cannot log in, make sure that the user was added to the Identity Authentication account (go to the Identity Authentication admin page and create the user via the User Management page or upload the user with his/her full details in a CSV file format. To see the required details, you can export a user to a CSV file and edit the file).
   
 
-#### 2.5	Set up trust between the customer account and IAS API (for SAP ID invitation flow)
+#### 2.5	Create IAS API technical user (for SAP ID invitation flow)
    1. Open the admin page of your Identity Authentication IDP account.
    2. Click Applications.
    3. Choose your application (created in step 3 in section 2.4.2)
@@ -111,35 +111,40 @@ As part of the [onboarding guide](https://uacp2.hana.ondemand.com/viewer/462e41a
 Additionally create the following destinations:
 
 ##### 2.7.1	SAPID Destination  
-Destination used for the invitation flow with IAS.  
-  + Name = sapid
-  + Type = HTTP
-  + Description = (enter a description)
-  + URL = (enter the URL to your IAS, https://<your Identity Authentication account name>.<accounts>.ondemand.com/)
-  + ProxyType = Internet
-  +	Authentication = BasicAuthentication
-  + User = (enter the user ID from section 2.5 above)
-  + Password = (enter the password from section 2.5 above)
+Destination used for the invitation flow with IAS. 
+Basic properties: 
+|Property Name|Property Value|
+|-------------|--------------|
+  | Name | sapid
+  | Type | HTTP
+  | Description |(Optional) Enter a meaningful description |
+  | URL | Enter the URL to your IAS, https://<your Identity Authentication account name>.<accounts>.ondemand.com/ |
+  | ProxyType | Internet |
+  |	Authentication | BasicAuthentication |
+  | User | Enter the user ID from section 2.5 above |
+  | Password | Enter the password from section 2.5 above |
   
   Additional property:
-  Properties are added by clicking on "New Property" button  
-  +	TrustAll = true (add this manually. Note that 'TrustAll' is the key and 'true' is its value.)
+  Properties are added by clicking on "New Property" button from the Additional Properties panel  
+|Property Name|Property Value|
+|-------------|--------------|
+| TrustAll | true |
+
+
 
 
 ##### 2.7.3	C4C__Public Destination  
 Public C4C destination (used for connecting to the C4C backend during a guest registration scenario) with the parameters in the next section.  
-+ Name = C4C__public (double underscore)
-+ Type = HTTP
-+ Description = (enter description)
-+ URL = …/sap/byd/odata/v1/pcmportal (this relative path should come after the full URL to C4C tenant, E.g. https://myXXXXXX.crm.ondemand.com/sap/byd/odata/v1/pcmportal)
-+ ProxyType=Internet
-+ Authentication = BasicAuthentication
-+ User = (admin user of the C4C tenant)
-+ Password=<admin user password> (admin password of the C4C tenant)  
-Additional properties:  
-+ authnContextClassRef = urn:oasis:names:tc:SAML:2.0:ac:classes:PreviousSession (add this manually)
-+ nameIdFormat = urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress (add this manually)
-+ scope = UIWC:CC_HOME (add this manually)
+|Property Name|Property Value|
+|-------------|--------------|
+| Name | C4C__public (double underscore) |
+| Type | HTTP|
+| Description | (Optional) Enter a meaningful description |
+| URL | …/sap/byd/odata/v1/pcmportal (this relative path should come after the full URL to C4C tenant, E.g. https://myXXXXXX.crm.ondemand.com/sap/byd/odata/v1/pcmportal) |
+| ProxyType | Internet |
+| Authentication | BasicAuthentication |
+| User | Admin user of the C4C tenant |
+| Password | Admin password for the C4C tenant |  
 
 #### 2.8	Configure SAP C4C Backend
 
@@ -212,10 +217,8 @@ https://flpnwc-[account name].dispatcher.[data center].hana.ondemand.com/sites/[
 | **How do I change the company logo or background of the support site?** | 1.	Go to the Home page. <br>2.	On the left, click ![services](/resources/ss3.png) to open Services and Tools. <br>3.	In the UI Theme Designer, click Configure.<br>4.	In order to change a logo, create a new theme as follows: <ul><li>a.	Click Create a New Theme.</li><li>b.	Follow the steps of the wizard and click Create Theme.</li><li>c.	On the right of the screen, select ![edit](/resources/ss4.png)  (quick editing mode) and upload the company logo.</li><li>d.	From the Theme tab at the top left, select Export to create a zip file containing the new theme you created with the logo. For more information, see Exporting Themes.</li></ul>5.	Now go to the Theme Manager (also in Services and Tools) and click Configure. <br>6.	Browse for and upload the zip file with the updated theme that includes your logo. <br>7.	Click Assign to Site.|
 
 
-## 4.	SAP C4C Documentation
+## 4.	[Solution Guide for SAP Cloud for Sales Documentation](https://help.sap.com/viewer/24765b551a014b779b95c7b07d8e9079/1808/en-US/275431f31f97472fa7ee58ca94e4b6e0.html)
 
-
-[https://cp.hana.ondemand.com/dps/d/preview/0cec219614e94fd3bdd0f0561e9b70e0/1511/en-US/frameset.htm?b7027a7e846f4cbf9391d6a475c24ce5.html ](https://cp.hana.ondemand.com/dps/d/preview/0cec219614e94fd3bdd0f0561e9b70e0/1511/en-US/frameset.htm?b7027a7e846f4cbf9391d6a475c24ce5.html )
 
 
 ## Disclaimer
